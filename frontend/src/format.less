@@ -1,0 +1,56 @@
+
+  .wowjoy-radio {
+    cursor: pointer;
+    display: inline-block;
+  }
+  input[type='radio']:checked {
+    &+.wowjoy-radio__inner {
+      border-color: #34a4fc;
+      &:before {
+        content: '';
+        background: #34a4fc;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+  .wowjoy-radio__inner {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid #DBDBDB;
+    vertical-align: sub;
+    margin-right: 5px;
+  }
+
+  input[type='checkbox']:checked {
+    &+.wowjoy-checkbox__inner {
+      border-color: #34a4fc;
+      &:before {
+        content: '\2713';
+        color: #34a4fc;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+  .wowjoy-checkbox__inner {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border: 1px solid #DBDBDB;
+    vertical-align: sub;
+    margin-right: 5px;
+  }

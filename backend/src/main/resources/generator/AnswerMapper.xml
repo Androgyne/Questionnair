@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bs.questionnair.mapper.AnswerMapper">
+  <resultMap id="BaseResultMap" type="com.bs.questionnair.model.Answer">
+    <id column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="fid" jdbcType="INTEGER" property="fid" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="date" jdbcType="TIMESTAMP" property="date" />
+    <result column="ip" jdbcType="OTHER" property="ip" />
+    <result column="content" jdbcType="OTHER" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    aid, fid, `uid`, `date`, ip, content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from answer
+    where aid = #{aid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByForm" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from answer
+    where fid = #{fid,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectNumByForm" parameterType="java.lang.Integer" resultType="Integer">
+    select
+    count(*)
+    from answer
+    where fid = #{fid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from answer
+    where aid = #{aid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="aid" keyProperty="aid" parameterType="com.bs.questionnair.model.Answer" useGeneratedKeys="true">
+    insert into answer (fid, `uid`, `date`, 
+      ip, content)
+    values (#{fid,jdbcType=INTEGER}, #{uid,jdbcType=VARCHAR}, now(),
+      #{ip,jdbcType=OTHER}, #{content,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" keyColumn="aid" keyProperty="aid" parameterType="com.bs.questionnair.model.Answer" useGeneratedKeys="true">
+    insert into answer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fid != null">
+        fid,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="date != null">
+        `date`,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fid != null">
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=OTHER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.questionnair.model.Answer">
+    update answer
+    <set>
+      <if test="fid != null">
+        fid = #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        `date` = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=OTHER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=OTHER},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bs.questionnair.model.Answer">
+    update answer
+    set fid = #{fid,jdbcType=INTEGER},
+      `uid` = #{uid,jdbcType=VARCHAR},
+      `date` = #{date,jdbcType=TIMESTAMP},
+      ip = #{ip,jdbcType=OTHER},
+      content = #{content,jdbcType=OTHER}
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+</mapper>

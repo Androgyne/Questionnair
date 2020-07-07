@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bs.questionnair.mapper.FormMapper">
+  <resultMap id="BaseResultMap" type="com.bs.questionnair.model.Form">
+    <id column="fid" jdbcType="INTEGER" property="fid" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="info" jdbcType="OTHER" property="info" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="add_date" jdbcType="TIMESTAMP" property="addDate" />
+    <result column="begin_date" jdbcType="TIMESTAMP" property="beginDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    fid, `uid`, title, info, `state`, add_date, begin_date, end_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from form
+    where fid = #{fid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from form
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from form
+    where fid = #{fid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="fid" keyProperty="fid" parameterType="com.bs.questionnair.model.Form" useGeneratedKeys="true">
+    insert into form (`uid`, title, info, 
+      `state`, add_date, begin_date, 
+      end_date)
+    values (#{uid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{info,jdbcType=OTHER}, 
+      #{state,jdbcType=INTEGER}, now(), #{beginDate,jdbcType=TIMESTAMP},
+      #{endDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="fid" keyProperty="fid" parameterType="com.bs.questionnair.model.Form" useGeneratedKeys="true">
+    insert into form
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="info != null">
+        info,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="addDate != null">
+        add_date,
+      </if>
+      <if test="beginDate != null">
+        begin_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        #{info,jdbcType=OTHER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="addDate != null">
+        #{addDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginDate != null">
+        #{beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.questionnair.model.Form">
+    update form
+    <set>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        info = #{info,jdbcType=OTHER},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="addDate != null">
+        add_date = #{addDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginDate != null">
+        begin_date = #{beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bs.questionnair.model.Form">
+    update form
+    set `uid` = #{uid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      info = #{info,jdbcType=OTHER},
+      `state` = #{state,jdbcType=INTEGER},
+      add_date = #{addDate,jdbcType=TIMESTAMP},
+      begin_date = #{beginDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP}
+    where fid = #{fid,jdbcType=INTEGER}
+  </update>
+  <update id="updateForRelease" parameterType="com.bs.questionnair.model.Form">
+    update form
+    set
+      `state` = #{state,jdbcType=INTEGER},
+      begin_date = now()
+    where fid = #{fid,jdbcType=INTEGER}
+  </update>
+  <update id="updateForStopRelease" parameterType="com.bs.questionnair.model.Form">
+    update form
+    set
+      `state` = #{state,jdbcType=INTEGER},
+      end_date = now()
+    where fid = #{fid,jdbcType=INTEGER}
+  </update>
+</mapper>
