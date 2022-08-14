@@ -1,0 +1,16 @@
+# 问卷调查网站
+
+![](img/logoheader.png)
+![](img/register.png)
+![](img/login.png)
+![](img/list.png)
+![](img/modifyTitle.png)
+![](img/radio.png)
+![](img/text.png)
+![](img/textarea.png)
+![](img/score.png)
+![](img/infoDrawer.png)
+![](img/fill.png)
+![](img/submitchecking.png)
+![](img/chart1.png)
+![](img/analysis.png)
